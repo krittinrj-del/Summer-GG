@@ -3,11 +3,13 @@ import { createClient } from '@supabase/supabase-js';
 import { supabaseConfig } from '@/lib/config';
 import { gallerySchema, homeSettingsSchema, preparationSchema, programSchema, type HomepageContent } from './schema';
 import { sampleHome } from './sample';
+import { shouldShowDemoContent } from './demo';
 
 const empty = (mode: HomepageContent['mode']): HomepageContent => ({ mode, settings: homeSettingsSchema.parse({}), programs: [], preparation: [], gallery: [], heroUrl: null });
 export async function getHomepageContent(): Promise<HomepageContent> {
   const config = supabaseConfig();
-  if (!config) return process.env.DEMO_CONTENT === 'true' ? sampleHome : empty('unconfigured');
+  if (shouldShowDemoContent(process.env.DEMO_CONTENT, Boolean(config))) return sampleHome;
+  if (!config) return empty('unconfigured');
   // Cookie-free anon client: homepage cannot inherit a staff session or read draft content.
   const db = createClient(config.url, config.key, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: (input, init) => fetch(input, { ...init, cache: 'no-store', signal: AbortSignal.timeout(8000) }) } });
   try {

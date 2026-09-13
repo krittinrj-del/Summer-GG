@@ -1,6 +1,6 @@
 # GG Summer — Phase 1A
 
-Next.js App Router + TypeScript + Tailwind CSS + Supabase PostgreSQL/Auth. This delivery is **Foundation only**, not the completed application system. No deployment or Google Drive integration was performed.
+Next.js App Router + TypeScript + Tailwind CSS + Supabase PostgreSQL/Auth. This delivery is **Foundation only**, not the completed application system. The public Home uses the supplied artwork; Google Drive integration and real application submission remain outside this phase.
 
 ## Inspection and scope
 
@@ -41,7 +41,7 @@ The requested image layout is:
 - `public/assets/references/editorial-reference-1.png`
 - `public/assets/references/editorial-reference-2.png`
 
-All four original PNG files are included unchanged. `logo.png` is the supplied On Point brand asset; the hero depicts a student group with Chinese architecture. The editorial references are design references only. They are stored for the next visual integration pass; this source-upload handoff does not redesign the Phase 1A preview. The preview illustration remains at `public/assets/images/landscape-study.svg`.
+All four original PNG files are included unchanged. `logo.png` is the supplied On Point brand asset; the hero depicts a student group with Chinese architecture. The editorial references are design references only. The public Home renders the logo and hero with `next/image`, including priority loading for the hero. Editorial references guide composition only; their artwork is not displayed. The original preview SVG remains unused by Home.
 
 `.gitignore` excludes environment files (except the credential-free `.env.example` template), dependencies, build output, local credential material and private-data directories. Tests and seed contain synthetic fixtures only.
 
@@ -51,7 +51,7 @@ All four original PNG files are included unchanged. `logo.png` is the supplied O
 | --- | --- |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL; HTTPS except local development |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Publishable API key; no service-role key is used in Phase 1A |
-| `DEMO_CONTENT` | Set `true` to render explicitly marked sample fixtures when Supabase is unconfigured; defaults off |
+| `DEMO_CONTENT` | Set `true` for labelled demo content. With no backend configuration, demo content is the default; `false` explicitly disables it |
 | `SITE_URL` | Trusted origin for metadata and Magic Link callbacks; required for login, e.g. `http://localhost:3000` locally |
 
 A configured but unreachable database renders a safe unavailable state. It never silently falls back to sample programs. Configured data marked `is_sample` remains visibly labelled. No PII is stored in browser storage. Demo/unconfigured-origin pages are noindex.
@@ -99,10 +99,10 @@ Visit `/admin/login`, request a Magic Link and open it in the same browser that 
 ## Content and legal placeholders
 
 - Replace draft brand name/logo, real company details, address, domain, business hours, LINE/email/phone.
-- Integrate the supplied brand/hero assets in the next visual pass; keep the editorial reference screenshots as references rather than homepage content.
+- Supplied logo and hero are integrated. Program/gallery illustrations reuse the local hero and are labelled as concept illustrations, not actual trip photographs.
 - Set `site_settings.homepage.value` to the shape documented by `src/lib/content/schema.ts`; replace synthetic statistics, headline and supporting text. Set `is_sample=false` after replacement. Disable `DEMO_CONTENT` on the real deployment.
 - Add verified programs, dates, ages, prices, capacity, opening windows and waitlist rules. Phase 1A does not calculate seats or take applications.
-- Gallery remains empty until approved photos exist. No participant images were invented.
+- Replace concept illustrations with approved trip photographs when available.
 - Terms, Privacy Notice, guardian age threshold and retention periods require owner/legal decisions before Phase 1C and before collecting data. The development age threshold of 20 is an example, not a legal conclusion. Retention is intentionally unset.
 - To prepare the first Terms draft, insert version/title/content with `content_hash = encode(sha256(convert_to(content,'UTF8')),'hex')`. Publishing requires `published_at` and `effective_at`; accepted text is versioned, never edited. Management UI belongs to 1C/1D.
 
@@ -114,10 +114,16 @@ For a disposable Supabase project with migrations applied, set `TEST_SUPABASE_UR
 
 ## Deployment, backup and next phases
 
-No deployment is part of this request. Later, import this project into Vercel, use Node 24, set the environment, apply database migrations independently, verify SMTP/callback allowlists and run Phase 1E review. Security headers are included; nonce-based CSP, broader performance/accessibility checks, application rate limiting, operational monitoring and production audit remain Phase 1E work. Do not treat a successful production build as readiness to collect minors' data.
+The repository main branch is connected to Vercel at https://summer-gg.vercel.app/. The visual update changes Public Home only. Before activating backend features, set the environment, apply database migrations independently, verify SMTP/callback allowlists and run Phase 1E review. Security headers are included; nonce-based CSP, broader performance/accessibility checks, application rate limiting, operational monitoring and production audit remain Phase 1E work. Do not treat a successful production build as readiness to collect minors' data.
 
 Before production migrations, take a Supabase database backup/snapshot and a storage inventory; test restore in staging. Roll back application releases using the prior deployment. These additive migrations have no destructive down migration; use a reviewed forward fix or verified backup restoration. Never automatically drop applicant/consent/audit tables.
 
 Next: Phase 1B public list/detail, preparation, gallery and contact. Phase 1C adds atomic submission/consent/capacity/idempotency services. Phase 1D adds dashboard/CRUD/export/PDF. Phase 1E performs production review. **Stop after Phase 1A build; do not begin 1B without a new request.**
 
 Phase 2: a future document-storage provider can consume immutable snapshots and `application_documents` (provider, external file/folder ID, checksum, revision, retry/status fields). Drive uploads must happen after committed application creation. No Drive SDK, credentials, API calls, sharing or provider implementation is included.
+
+## Public Home visual direction
+
+Premium Editorial × Chinese Brush Art: warm ivory, vermilion, oversized serif headings paired with Thai sans, thin rules and numbered sections. Desktop places text left and the student group right; mobile stacks text above the artwork. Mobile navigation supports keyboard and Escape. Motion honors reduced-motion preferences. Program and signup links lead to existing in-page guidance; no application data is collected.
+
+The demo-mode tests cover an unconfigured deployment, explicit opt-out, and configured backend behavior. Validate the rendered Home at 1440px and 390px, including image loading, navigation and horizontal overflow, in addition to typecheck, lint, tests and production build.
