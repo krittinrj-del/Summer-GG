@@ -1,0 +1,25 @@
+node_modules/
+.next/
+.env*
+!.env.example
+*.tsbuildinfo
+coverage/
+.vercel/
+supabase/.temp/
+
+# Local credentials, secret material, private data and development artifacts.
+credentials/
+secrets/
+private/
+private-data/
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+service-account*.json
+*service_role*.json
+.npmrc.local
+*.log
+.DS_Store
+Thumbs.db

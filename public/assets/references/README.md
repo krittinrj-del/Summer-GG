@@ -1,0 +1,1 @@
+Owner-supplied editorial design references are preserved unchanged as editorial-reference-1.png and editorial-reference-2.png. The supplied hero is ../images/summer-china-hero.png and the brand logo is ../brand/logo.png. These reference screenshots are design inputs, not homepage content.
