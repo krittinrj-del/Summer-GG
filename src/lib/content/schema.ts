@@ -19,7 +19,7 @@ export const programSchema = z.object({
 });
 export type Program = z.infer<typeof programSchema> & { imageUrl?: string | null };
 export const preparationSchema = z.object({ id: z.string(), title: z.string(), description: z.string() });
-export const gallerySchema = z.object({ id: z.string(), image_path: z.string(), alt: z.string(), caption: z.string(), year: z.number() });
+export const gallerySchema = z.object({ id: z.string(), image_path: z.string(), alt: z.string(), caption: z.string(), year: z.number().nullable() });
 export type HomepageContent = {
   settings: HomeSettings; programs: Program[];
   preparation: z.infer<typeof preparationSchema>[];

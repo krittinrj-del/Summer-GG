@@ -1,2 +1,3 @@
 import Link from 'next/link';
-export default function NotFound() { return <main id="main" className="panel"><p className="eyebrow">404 / NOT FOUND</p><h1>ไม่พบหน้าที่คุณค้นหา</h1><p>หน้านี้อาจยังไม่เปิดใช้งาน กรุณากลับไปดูข้อมูลที่หน้าแรก</p><Link href="/" className="button">กลับหน้าแรก</Link></main>; }
+import { PublicFrame, PageHero } from '@/components/public-frame';
+export default function NotFound() { return <PublicFrame><main id="main"><PageHero number="404" title="ไม่พบหน้าที่คุณค้นหา" english="A different path." description="เส้นทางนี้อาจเปลี่ยนไปแล้ว ลองกลับไปเลือกโปรแกรมและเริ่มค้นพบเรื่องราวใหม่อีกครั้ง" /><div className="edition-wrap public-cta"><Link href="/programs" className="button">สำรวจโปรแกรม ↗</Link></div></main></PublicFrame>; }

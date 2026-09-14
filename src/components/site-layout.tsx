@@ -15,8 +15,8 @@ export function Header({ name }: { name: string }) {
 export function Footer({ name, address, isDemo = false }: { name: string; address: string | null; isDemo?: boolean }) {
   return <footer className="edition-footer edition-wrap">
     <div className="edition-footer-top"><div><Brand name={name} /><p>{address || 'เรียนรู้โลกกว้าง เติบโตในแบบของคุณ'}</p></div>
-      <nav className="edition-footer-nav" aria-label="เมนูท้ายเว็บไซต์"><a href="#programs">โปรแกรม Summer</a><a href="#preparation">เตรียมตัวก่อนเดินทาง</a><a href="#contact">ติดต่อ</a><Link href="/admin/login">สำหรับทีมงาน</Link></nav>
+      <nav className="edition-footer-nav" aria-label="เมนูท้ายเว็บไซต์"><Link href="/">ภาพรวม</Link><Link href="/programs">โปรแกรม Summer</Link><Link href="/preparation">เตรียมตัวก่อนเดินทาง</Link><Link href="/gallery">ภาพกิจกรรม</Link><Link href="/contact">ติดต่อ</Link><Link href="/apply">สมัครเลย</Link><Link href="/admin/login">สำหรับทีมงาน</Link></nav>
     </div>
-    <div className="edition-footer-bottom"><span>© {new Date().getFullYear()} {name}</span><span>{isDemo ? 'ฉบับตัวอย่าง · ภาพประกอบและเรื่องราวเพื่อแนะนำแนวคิดโปรแกรม' : 'LEARN. EXPLORE. BECOME.'}</span><a href="#overview">กลับขึ้นด้านบน ↑</a></div>
+    <div className="edition-footer-bottom"><span>© {new Date().getFullYear()} {name}</span><span>{isDemo ? 'ฉบับตัวอย่าง · ภาพประกอบและเรื่องราวเพื่อแนะนำแนวคิดโปรแกรม' : 'LEARN. EXPLORE. BECOME.'}</span><a href="#main">กลับขึ้นด้านบน ↑</a></div>
   </footer>;
 }

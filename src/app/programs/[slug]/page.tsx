@@ -1,0 +1,18 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { PublicFrame } from '@/components/public-frame';
+import { FAQList } from '@/components/public-content';
+import { getPublicContent } from '@/lib/content/public-source';
+import { findProgram, confirmationLabel } from '@/lib/content/public';
+import { publicMetadata } from '@/lib/public-metadata';
+type Props = { params: Promise<{ slug: string }> };
+export async function generateMetadata({ params }: Props) {
+  const program = findProgram(getPublicContent().programs, (await params).slug);
+  return publicMetadata(program?.title || 'ไม่พบโปรแกรม', program?.summary || 'ค้นหาเส้นทางการเรียนรู้ของคุณ', program ? `/programs/${program.slug}` : '/programs');
+}
+export default async function ProgramPage({ params }: Props) {
+  const program = findProgram(getPublicContent().programs, (await params).slug);
+  if (!program) notFound();
+  return <PublicFrame><main id="main"><div className="edition-wrap public-detail-hero"><div><Link className="edition-text-link" href="/programs">← โปรแกรมทั้งหมด</Link><p className="edition-kicker">{program.country} / {program.city}</p><p className="detail-city" lang="en">{program.englishName}</p><h1>{program.title}</h1><p>{program.summary}</p><p className="public-facts">อายุ {program.ageMin}–{program.ageMax} ปี · {program.durationDays} วัน</p><span className="edition-demo-label">ข้อมูลตัวอย่าง · ยังไม่เปิดรับสมัคร</span></div><figure className="detail-art"><Image src={program.image} alt={program.alt} fill priority sizes="(max-width: 760px) 100vw, 50vw" /><figcaption>ภาพประกอบแนวคิด</figcaption></figure></div><div className="edition-wrap"><p className="public-demo-note">รายละเอียดต่อไปนี้เป็นข้อมูลตัวอย่าง ไม่ใช่ข้อเสนอขายหรือกำหนดการจริง · ราคาและวันเดินทาง: {confirmationLabel}</p><section className="public-section public-two-column"><div><p className="edition-kicker">01 / THE JOURNEY</p><h2>ภาพรวมโปรแกรม</h2></div><div><p>{program.overview}</p><h3>Highlights</h3><ul className="public-list">{program.highlights.map(text => <li key={text}>{text}</li>)}</ul></div></section><section className="public-section public-two-column"><div><p className="edition-kicker">02 / LEARN BY DOING</p><h2>ตัวอย่างกิจกรรม</h2><p>ลำดับนี้เล่าแนวคิด ไม่ใช่กำหนดการรายวัน</p></div><div>{program.activities.map((activity, index) => <article key={activity.title} className="public-activity"><h3>{index + 1}. {activity.title}</h3><p>{activity.description}</p></article>)}</div></section><section className="public-section public-two-column"><div><p className="edition-kicker">03 / THE DETAILS</p><h2>รายละเอียดที่ควรรู้</h2></div><div><h3>สิ่งที่รวมในโปรแกรม — แนวคิดตัวอย่าง</h3><ul className="public-list">{program.included.map(text => <li key={text}>{text}</li>)}</ul><h3>สิ่งที่ไม่รวม / ต้องตรวจสอบเพิ่มเติม</h3><ul className="public-list">{program.excluded.map(text => <li key={text}>{text}</li>)}</ul><p>ขอบเขตบริการทั้งหมดต้องยืนยันก่อนสมัคร</p><h3>ที่พักและการดูแล</h3><p>{program.accommodation}</p><h3>ความปลอดภัย</h3><p>{program.safety}</p></div></section><section className="public-section public-two-column"><div><p className="edition-kicker">04 / A LITTLE MORE</p><h2>คำถามเกี่ยวกับ {program.englishName}</h2></div><FAQList items={program.faq} /></section><section className="public-cta"><h2>เริ่มต้นจากความสนใจของคุณ</h2><div className="actions"><Link className="button" href={`/apply?program=${program.slug}`}>สมัครโปรแกรมนี้ ↗</Link><Link className="edition-text-link" href="/contact">สอบถามข้อมูล →</Link></div></section></div></main></PublicFrame>;
+}

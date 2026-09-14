@@ -1,12 +1,12 @@
-# GG Summer — Phase 1A
+# GG Summer — Phase 1B Public Website
 
-Next.js App Router + TypeScript + Tailwind CSS + Supabase PostgreSQL/Auth. This delivery is **Foundation only**, not the completed application system. The public Home uses the supplied artwork; Google Drive integration and real application submission remain outside this phase.
+Next.js App Router + TypeScript + Tailwind CSS + Supabase PostgreSQL/Auth. This delivery includes the Phase 1A foundation and Phase 1B public website. The public Home uses the supplied artwork; Google Drive integration and real application submission remain outside this phase.
 
 ## Inspection and scope
 
 The initial workspace had no Git repository, source files, AGENTS.md, package manager or lockfile. A new project was created here with pnpm, the available package manager. Supabase configuration has not been supplied. The four owner-supplied image assets were added during the GitHub handoff. `public/assets/images/landscape-study.svg` remains the temporary illustration used by the initial Phase 1A preview, not a photograph of actual participants.
 
-Implemented in the requested order: repository inspection → design tokens → migrations → authentication/roles → shared navigation/layout → coherent homepage. Homepage sections use in-page anchors until public routes arrive in Phase 1B; signup CTA explains availability instead of pretending to accept an application.
+Implemented in the requested order: repository inspection → design tokens → migrations → authentication/roles → shared navigation/layout → coherent homepage. Phase 1B connects homepage CTAs to public routes. Signup CTAs open a preparation page without collecting applications.
 
 ## Local setup
 
@@ -32,7 +32,7 @@ Use the commands above for a fresh checkout. Machine-specific runtime paths, pac
 
 ## Source documents and asset paths
 
-The original requirements are preserved at `docs/GG-Summer-Website-Master-Prompt.md`. Only Phase 1A is implemented; instructions for later phases in that document are not authorization to implement them now.
+The original requirements are preserved at `docs/GG-Summer-Website-Master-Prompt.md`. Phases 1A and 1B are implemented; Phase 1C and later require a separate request.
 
 The requested image layout is:
 
@@ -61,6 +61,12 @@ A configured but unreachable database renders a safe unavailable state. It never
 | Route | Phase 1A behavior |
 | --- | --- |
 | `/` | Server-rendered homepage: hero, statistics, featured programs, preparation preview, gallery, contact |
+| `/programs` | City filter and labelled demo programs |
+| `/programs/beijing`, `/programs/hangzhou` | Program overview, sample activities, care, inclusions and FAQ |
+| `/preparation` | Ten expandable topics with temporary checkboxes |
+| `/gallery` | City filter and keyboard accessible native-dialog lightbox |
+| `/contact` | Central unconfirmed contact details, FAQ, no contact form |
+| `/apply?program=beijing` | Selected program and preparation guidance; no form or storage |
 | `/admin/login` | Magic Link request for existing accounts only; unavailable until configured |
 | `/auth/callback` | PKCE code exchange with fixed, trusted redirect |
 | `/admin` | Protected foundation landing, current role, sign-out; no fake dashboard data |
@@ -118,12 +124,22 @@ The repository main branch is connected to Vercel at https://summer-gg.vercel.ap
 
 Before production migrations, take a Supabase database backup/snapshot and a storage inventory; test restore in staging. Roll back application releases using the prior deployment. These additive migrations have no destructive down migration; use a reviewed forward fix or verified backup restoration. Never automatically drop applicant/consent/audit tables.
 
-Next: Phase 1B public list/detail, preparation, gallery and contact. Phase 1C adds atomic submission/consent/capacity/idempotency services. Phase 1D adds dashboard/CRUD/export/PDF. Phase 1E performs production review. **Stop after Phase 1A build; do not begin 1B without a new request.**
+Phase 1B public routes are complete. Next, Phase 1C adds atomic submission/consent/capacity/idempotency services. Phase 1D adds dashboard/CRUD/export/PDF. Phase 1E performs production review. **Stop after Phase 1B; do not begin Phase 1C without a new request.**
 
 Phase 2: a future document-storage provider can consume immutable snapshots and `application_documents` (provider, external file/folder ID, checksum, revision, retry/status fields). Drive uploads must happen after committed application creation. No Drive SDK, credentials, API calls, sharing or provider implementation is included.
 
 ## Public Home visual direction
 
-Premium Editorial × Chinese Brush Art: warm ivory, vermilion, oversized serif headings paired with Thai sans, thin rules and numbered sections. Desktop places text left and the student group right; mobile stacks text above the artwork. Mobile navigation supports keyboard and Escape. Motion honors reduced-motion preferences. Program and signup links lead to existing in-page guidance; no application data is collected.
+Premium Editorial × Chinese Brush Art: warm ivory, vermilion, oversized serif headings paired with Thai sans, thin rules and numbered sections. Desktop places text left and the student group right; mobile stacks text above the artwork. Mobile navigation supports keyboard and Escape. Motion honors reduced-motion preferences. Program links open program details; signup links open `/apply` with the selected slug. No application data is collected.
 
 The demo-mode tests cover an unconfigured deployment, explicit opt-out, and configured backend behavior. Validate the rendered Home at 1440px and 390px, including image loading, navigation and horizontal overflow, in addition to typecheck, lint, tests and production build.
+
+## Phase 1B content and verification
+
+- `src/lib/content/public.ts` owns program, preparation, gallery, contact and FAQ data. All program dates and prices are null. Contact values are null and render as unconfirmed text, never fabricated clickable destinations. Gallery records have no historical year and explicitly identify concept illustrations.
+- `src/lib/content/public-source.ts` is the UI-facing source boundary. `DEMO_CONTENT=true` selects demo data; unconfigured installs default to demo unless explicitly disabled. With demo disabled this phase does not load real program/gallery details. A future published-content adapter can return the same types. No new database integration was added, and `/apply` makes no database calls.
+- `sample.ts` adapts the same program/gallery data for the existing Home. The original Home composition and local assets remain in use.
+- Native `<dialog>` traps keyboard focus, closes with Escape or its close button, and returns focus to the opening image button. Preparation checkboxes are temporary DOM state; there is no browser-storage persistence.
+- New routes have unique metadata and Open Graph previews. Demo pages are noindex and the demo sitemap is empty. Robots excludes admin, auth and apply; no offer/event structured data is emitted.
+- Typecheck, lint, 9 tests (including existing database-policy tests), and production build were run. Browser verification covers all routes at 390, 768 and 1440px, image loading, overflow, route navigation, invalid slug, program query, gallery keyboard interactions and checklists.
+- No migrations, authentication logic, real applications, consent workflow, PDF, Drive, messaging, payment or CMS work is included in Phase 1B. Login receives the shared visual frame only.

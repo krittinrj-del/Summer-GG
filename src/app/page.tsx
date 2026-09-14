@@ -1,13 +1,15 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { getHomepageContent } from '@/lib/content/home';
 import { HERO_ALT, HERO_IMAGE } from '@/lib/content/sample';
 import { Header, Footer } from '@/components/site-layout';
 import { Counter } from '@/components/counter';
-import { siteOrigin } from '@/lib/config';
+import { publicMetadata } from '@/lib/public-metadata';
 import './home.css';
+import './public.css';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { alternates: siteOrigin() ? { canonical: '/' } : undefined };
+export const metadata = publicMetadata('เรียนรู้ เปิดโลก เติบโต', 'ค้นพบแนวคิดโปรแกรม Summer ภาษาจีน วัฒนธรรม และมิตรภาพสำหรับนักเรียนและครอบครัว', '/');
 const statusLabels = { open: 'เปิดรับสมัคร', nearly_full: 'ใกล้เต็ม', waitlist: 'Waiting List', closed: 'แนะนำโปรแกรม' };
 function localImage(value: string | null | undefined) {
   return value?.startsWith('/assets/images/') && !value.includes('..') ? value : HERO_IMAGE;
@@ -35,7 +37,7 @@ export default async function HomePage() {
           <p className="edition-kicker"><span aria-hidden="true" className="edition-rule" /> CHINA SUMMER JOURNEYS</p>
           <h1 id="hero-title"><span lang="en">A summer</span><em lang="en">to become.</em><span className="hero-thai-title">{settings.headline}</span></h1>
           <p className="hero-description">{settings.supportingText}</p>
-          <div className="actions"><a className="button" href="#programs">ดูโปรแกรม <span aria-hidden="true">↗</span></a><a className="edition-text-link" href="#registration">สมัครเลย <span aria-hidden="true">→</span></a></div>
+          <div className="actions"><Link className="button" href="/programs">ดูโปรแกรม <span aria-hidden="true">↗</span></Link><Link className="edition-text-link" href="/apply">สมัครเลย <span aria-hidden="true">→</span></Link></div>
           <div className="hero-footnote"><span className="hero-chinese" lang="zh" aria-hidden="true">学 · 行 · 成长</span><span>เรียนรู้ · ออกเดินทาง · เติบโต</span></div>
         </div></div>
         <div className="hero-margin-note" aria-hidden="true">THE WORLD IS YOUR CLASSROOM — 中国</div>
@@ -51,19 +53,19 @@ export default async function HomePage() {
       <section id="programs" className="edition-section edition-wrap" aria-labelledby="program-title">
         <div className="edition-section-head"><div><p className="edition-kicker"><span>01</span> / FIND YOUR SUMMER</p><h2 id="program-title">ออกไปเจอ<span className="serif-word" lang="en">your world.</span></h2></div><p>สองเส้นทาง สองมุมมอง<br />ค้นพบซัมเมอร์ในแบบของคุณ</p></div>
         <div className="edition-programs">{programs.map((program, i) => <article className="edition-program" key={program.id}>
-          <a className="edition-program-art" href="#registration" aria-label={`ดูแนวทางสมัคร ${program.title}`}>
+          <Link className="edition-program-art" href={`/programs/${program.slug}`} aria-label={`ดูรายละเอียด ${program.title}`}>
             <Image src={localImage(program.imageUrl)} alt={program.cover_alt || HERO_ALT} fill sizes="(max-width: 760px) 100vw, 46vw" />
             <span className="program-place" lang="en">{program.is_sample ? (i === 0 ? 'Beijing' : 'Hangzhou') : program.city}</span><span className="program-arrow" aria-hidden="true">↗</span>
-          </a>
+          </Link>
           <div className="edition-program-meta"><span>{program.country} / {program.city}</span><span>{program.is_sample ? 'โปรแกรมตัวอย่าง' : statusLabels[program.registration_status]}</span></div>
           <h3>{program.title}</h3><p>{program.summary}</p>
-          <div className="edition-program-bottom"><span>{program.age_min !== null && program.age_max !== null ? `อายุ ${program.age_min}–${program.age_max} ปี` : 'เรียนรู้ผ่านประสบการณ์'} · {program.is_sample ? '14 วันแห่งการค้นพบ' : 'ภาษาและวัฒนธรรม'}</span><a className="edition-text-link" href="#registration">สำรวจเส้นทาง ↗</a></div>
+          <div className="edition-program-bottom"><span>{program.age_min !== null && program.age_max !== null ? `อายุ ${program.age_min}–${program.age_max} ปี` : 'เรียนรู้ผ่านประสบการณ์'} · {program.is_sample ? '14 วันแห่งการค้นพบ' : 'ภาษาและวัฒนธรรม'}</span><Link className="edition-text-link" href={`/programs/${program.slug}`}>สำรวจเส้นทาง ↗</Link></div>
         </article>)}</div>
         {!programs.length && <p className="edition-prose">การเดินทางเริ่มจากความสนใจของคุณ สำรวจแนวทางเตรียมตัวและค้นหาสิ่งที่อยากเรียนรู้จากซัมเมอร์ครั้งต่อไป</p>}
       </section>
 
       <section id="preparation" className="edition-preparation" aria-labelledby="preparation-title"><div className="edition-wrap edition-preparation-grid">
-        <div className="edition-preparation-heading"><p className="edition-kicker"><span>02</span> / BEFORE YOU GO</p><p className="edition-display" lang="en">Great journeys<br />begin <em>here.</em></p><h2 id="preparation-title">เตรียมพร้อมให้ทุกก้าว<br />เป็นก้าวที่มั่นใจ</h2><a className="edition-text-link" href="#registration">เริ่มวางแผนการเดินทาง →</a></div>
+        <div className="edition-preparation-heading"><p className="edition-kicker"><span>02</span> / BEFORE YOU GO</p><p className="edition-display" lang="en">Great journeys<br />begin <em>here.</em></p><h2 id="preparation-title">เตรียมพร้อมให้ทุกก้าว<br />เป็นก้าวที่มั่นใจ</h2><Link className="edition-text-link" href="/preparation">อ่านคู่มือเตรียมตัว →</Link></div>
         <ol className="edition-steps">{preparation.map((step, i) => <li key={step.id}><span className="step-number" aria-hidden="true">0{i + 1}</span><div><h3>{step.title}</h3><p>{step.description}</p></div></li>)}</ol>
         {!preparation.length && <p className="edition-prose">เริ่มต้นจากการเลือกเป้าหมายการเรียนรู้ เตรียมเอกสาร และทำความรู้จักวัฒนธรรมก่อนออกเดินทาง</p>}
       </div></section>
@@ -74,15 +76,15 @@ export default async function HomePage() {
           <div className="edition-gallery-image"><Image src={localImage(item.imageUrl)} alt={item.alt} fill sizes="(max-width: 760px) 100vw, 60vw" /><span className="gallery-word" lang="en" aria-hidden="true">{i === 0 ? 'Explore.' : 'Together.'}</span></div>
           <figcaption><span>0{i + 1} / {item.caption}</span><span>ภาพประกอบแนวคิด</span></figcaption>
         </figure>)}</div>
-        <p className="edition-image-note">ภาพประกอบสำหรับเล่าแนวคิดการเดินทาง ไม่ใช่ภาพบันทึกกิจกรรมจากโปรแกรมจริง</p>
+        <Link className="edition-text-link" href="/gallery">ชมภาพและเรื่องราวทั้งหมด ↗</Link><p className="edition-image-note">ภาพประกอบสำหรับเล่าแนวคิดการเดินทาง ไม่ใช่ภาพบันทึกกิจกรรมจากโปรแกรมจริง</p>
       </section>
 
       <section id="contact" className="edition-contact edition-wrap" aria-labelledby="contact-title">
         <p className="edition-kicker"><span>04</span> / YOUR NEXT CHAPTER</p>
         <h2 id="contact-title">ซัมเมอร์ถัดไปของคุณ<br /><em lang="en">starts with a little curiosity.</em></h2>
         <p>เริ่มจากสิ่งที่คุณอยากรู้ แล้วค่อย ๆ วางแผนการเดินทางไปด้วยกัน</p>
-        <div className="actions">{line && <a className="button" href={line} rel="noopener noreferrer" target="_blank">พูดคุยทาง LINE ↗</a>}{hasPhone && <a className="button secondary" href={`tel:${phone}`}>{settings.phone}</a>}{settings.email && <a className="button secondary" href={`mailto:${settings.email}`}>พูดคุยทางอีเมล ↗</a>}{!hasContact && <a className="button" href="#registration">วางแผนซัมเมอร์ของคุณ <span aria-hidden="true">↗</span></a>}</div>
-        <details id="registration" className="edition-registration"><summary>ก่อนเริ่มสมัคร <span aria-hidden="true">＋</span></summary><div><p>{isDemo ? 'คุณกำลังชมโปรแกรมตัวอย่างเพื่อค้นหาแนวทางการเดินทาง เว็บไซต์นี้ยังไม่รับใบสมัครหรือข้อมูลส่วนบุคคล' : 'การสมัครออนไลน์ยังไม่เปิดให้บริการ โปรดตรวจสอบรายละเอียดและเงื่อนไขก่อนวางแผนการเดินทาง'}</p><p>จดสิ่งที่อยากเรียนรู้ ช่วงเวลาที่สะดวก และคำถามที่อยากพูดคุยกับครอบครัว แล้วเลือกเส้นทางที่เหมาะกับคุณ</p><a className="edition-text-link" href="#programs">กลับไปสำรวจโปรแกรม ↑</a></div></details>
+        <div className="actions">{line && <a className="button" href={line} rel="noopener noreferrer" target="_blank">พูดคุยทาง LINE ↗</a>}{hasPhone && <a className="button secondary" href={`tel:${phone}`}>{settings.phone}</a>}{settings.email && <a className="button secondary" href={`mailto:${settings.email}`}>พูดคุยทางอีเมล ↗</a>}{!hasContact && <Link className="button" href="/contact">วางแผนซัมเมอร์ของคุณ <span aria-hidden="true">↗</span></Link>}</div>
+        <p className="edition-image-note">เลือกโปรแกรมที่สนใจและอ่านข้อมูลเตรียมตัวก่อนสมัคร</p>
       </section>
     </main>
     <Footer name={settings.siteName} address={settings.address} isDemo={isDemo} />
