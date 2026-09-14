@@ -4,7 +4,7 @@ import { FAQList } from '@/components/public-content';
 import { getPublicContent } from '@/lib/content/public-source';
 import { confirmationLabel } from '@/lib/content/public';
 import { publicMetadata } from '@/lib/public-metadata';
-export const metadata = publicMetadata('ติดต่อและปรึกษาโปรแกรม', 'ข้อมูลติดต่อ GG Summer และคำถามก่อนวางแผนโปรแกรมสำหรับครอบครัว', '/contact');
+export const metadata = publicMetadata('ติดต่อและปรึกษาโปรแกรม', 'ข้อมูลติดต่อ On Point Summer Programs และคำถามก่อนวางแผนโปรแกรมสำหรับครอบครัว', '/contact');
 export default function ContactPage() {
   const { contact, faq } = getPublicContent();
   const channels = [['LINE', contact.line], ['โทรศัพท์', contact.phone], ['Email', contact.email], ['เวลาทำการ', contact.hours], ['ที่อยู่', contact.address]];

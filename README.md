@@ -120,7 +120,7 @@ For a disposable Supabase project with migrations applied, set `TEST_SUPABASE_UR
 
 ## Deployment, backup and next phases
 
-The repository main branch is connected to Vercel at https://summer-gg.vercel.app/. The visual update changes Public Home only. Before activating backend features, set the environment, apply database migrations independently, verify SMTP/callback allowlists and run Phase 1E review. Security headers are included; nonce-based CSP, broader performance/accessibility checks, application rate limiting, operational monitoring and production audit remain Phase 1E work. Do not treat a successful production build as readiness to collect minors' data.
+The repository main branch is connected to Vercel at https://summer-gg.vercel.app/. The brand update covers the existing public pages and login presentation. Before activating backend features, set the environment, apply database migrations independently, verify SMTP/callback allowlists and run Phase 1E review. Security headers are included; nonce-based CSP, broader performance/accessibility checks, application rate limiting, operational monitoring and production audit remain Phase 1E work. Do not treat a successful production build as readiness to collect minors' data.
 
 Before production migrations, take a Supabase database backup/snapshot and a storage inventory; test restore in staging. Roll back application releases using the prior deployment. These additive migrations have no destructive down migration; use a reviewed forward fix or verified backup restoration. Never automatically drop applicant/consent/audit tables.
 
@@ -130,7 +130,7 @@ Phase 2: a future document-storage provider can consume immutable snapshots and 
 
 ## Public Home visual direction
 
-Premium Editorial × Chinese Brush Art: warm ivory, vermilion, oversized serif headings paired with Thai sans, thin rules and numbered sections. Desktop places text left and the student group right; mobile stacks text above the artwork. Mobile navigation supports keyboard and Escape. Motion honors reduced-motion preferences. Program links open program details; signup links open `/apply` with the selected slug. No application data is collected.
+Premium Editorial × Chinese Brush Art: warm off-white, logo-derived navy and orange, oversized serif headings paired with Thai sans, thin rules and numbered sections. Desktop places text left and the student group right; mobile stacks text above the artwork. Mobile navigation supports keyboard and Escape. Motion honors reduced-motion preferences. Program links open program details; signup links open `/apply` with the selected slug. No application data is collected.
 
 The demo-mode tests cover an unconfigured deployment, explicit opt-out, and configured backend behavior. Validate the rendered Home at 1440px and 390px, including image loading, navigation and horizontal overflow, in addition to typecheck, lint, tests and production build.
 
@@ -143,3 +143,9 @@ The demo-mode tests cover an unconfigured deployment, explicit opt-out, and conf
 - New routes have unique metadata and Open Graph previews. Demo pages are noindex and the demo sitemap is empty. Robots excludes admin, auth and apply; no offer/event structured data is emitted.
 - Typecheck, lint, 9 tests (including existing database-policy tests), and production build were run. Browser verification covers all routes at 390, 768 and 1440px, image loading, overflow, route navigation, invalid slug, program query, gallery keyboard interactions and checklists.
 - No migrations, authentication logic, real applications, consent workflow, PDF, Drive, messaging, payment or CMS work is included in Phase 1B. Login receives the shared visual frame only.
+
+## On Point brand identity
+
+Header and footer use only the original On Point PNG, linked to Home. CSS trims its transparent canvas without altering or distorting the artwork. Public copy, metadata and favicon use On Point branding; repository, environment and database identifiers are unchanged.
+
+`src/app/brand-tokens.css` owns the semantic palette. Opaque logo pixels yield Navy **#162C56** and Orange **#F19034**. Off-white **#F8F6F1** is the page surface. CTA labels use navy on orange (5.74:1); orange text on light surfaces uses the derived darker shade **#AA510D** (5.00:1 on off-white). Navy text on off-white is 12.72:1. Dark sections use orange accents and light text. Focus outlines, underlined active navigation and disclosure markers preserve non-color interaction cues.

@@ -29,7 +29,7 @@ export default async function HomePage() {
   const hasContact = Boolean(line || hasPhone || settings.email);
 
   return <div className="public-home">
-    <Header name={settings.siteName} />
+    <Header />
     <main id="main">
       <section id="overview" className="editorial-hero" aria-labelledby="hero-title">
         <div className="editorial-hero-art"><Image id="summer-hero-image" src={HERO_IMAGE} alt={HERO_ALT} fill priority sizes="(max-width: 760px) 140vw, 100vw" /></div>
@@ -87,6 +87,6 @@ export default async function HomePage() {
         <p className="edition-image-note">เลือกโปรแกรมที่สนใจและอ่านข้อมูลเตรียมตัวก่อนสมัคร</p>
       </section>
     </main>
-    <Footer name={settings.siteName} address={settings.address} isDemo={isDemo} />
+    <Footer address={settings.address} isDemo={isDemo} />
   </div>;
 }

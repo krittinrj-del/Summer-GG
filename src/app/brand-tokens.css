@@ -1,0 +1,28 @@
+/* Exact opaque logo pixels: Navy #162C56 (100368), Orange #F19034 (55631).
+   Accessible orange text is a darker shade; original artwork is unchanged. */
+:root {
+  --color-brand-navy: #162c56;
+  --color-brand-orange: #f19034;
+  --color-brand-primary: var(--color-brand-navy);
+  --color-brand-accent: var(--color-brand-orange);
+  --color-brand-accent-hover: #ffae60;
+  --color-accent-text: #aa510d;
+  --color-background: #f8f6f1;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e9edf4;
+  --color-text: var(--color-brand-navy);
+  --color-text-muted: #536079;
+  --color-on-accent: var(--color-brand-navy);
+  --color-on-dark: var(--color-background);
+  --color-on-dark-muted: #d7dfed;
+  --color-border: rgb(22 44 86 / 18%);
+  --color-control-border: #77839a;
+  --color-border-on-dark: rgb(248 246 241 / 45%);
+  --color-focus: var(--color-brand-navy);
+  --color-shadow: rgb(22 44 86 / 10%);
+  --color-backdrop: rgb(22 44 86 / 88%);
+  --color-paper-texture: rgb(22 44 86 / 14%);
+  --color-error: #b42318;
+  --mask-opaque: #000000;
+}
+::selection { background: var(--color-brand-primary); color: var(--color-surface); }

@@ -7,7 +7,7 @@ import { HERO_IMAGE, HERO_ALT, demoPrograms, demoGallery } from './public';
 export const sampleHome: HomepageContent = {
   mode: 'demo',
   settings: homeSettingsSchema.parse({
-    siteName: 'GG Summer', headline: 'เปิดโลกใบใหม่ ในซัมเมอร์ของคุณ',
+    siteName: 'On Point Summer Programs', headline: 'เปิดโลกใบใหม่ ในซัมเมอร์ของคุณ',
     supportingText: 'เรียนรู้ภาษาจีนผ่านเรื่องราวนอกห้องเรียน ออกเดินทางพบวัฒนธรรม มิตรภาพ และตัวคุณในมุมที่ไม่เคยรู้จัก',
     previousYearStudents: 120, previousYear: 2025,
     heroPath: HERO_IMAGE, heroAlt: HERO_ALT,

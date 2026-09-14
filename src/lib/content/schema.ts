@@ -1,6 +1,6 @@
 import { z } from 'zod';
 export const homeSettingsSchema = z.object({
-  siteName: z.string().default('GG Summer'),
+  siteName: z.string().default('On Point Summer Programs'),
   headline: z.string().default('เปิดโลกใบใหม่ ในซัมเมอร์ของคุณ'),
   supportingText: z.string().default('เรียนรู้ภาษา สัมผัสวัฒนธรรม และเติบโตผ่านประสบการณ์นอกห้องเรียน'),
   previousYearStudents: z.number().int().nonnegative().nullable().default(null),
